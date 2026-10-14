@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Base de données locale
+data/
+*.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Système
+.DS_Store
+Thumbs.db
