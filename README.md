@@ -6,7 +6,7 @@ API FastAPI d'authentification JWT et de permissions par rôle (RBAC) — inscri
 
 ## Démo en ligne
 
-- API : `<à compléter après déploiement>` — documentation interactive sur `/docs`
+- API : `https://auth-rbac-api-hvlo.onrender.com/docs` — documentation interactive sur `/docs`
 - Health check : `GET /health`
 
 ## Règles de permissions
