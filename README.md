@@ -72,7 +72,7 @@ Importe `postman/collection.json` dans Postman. La requête "Login" enregistre a
 
 ### Backend sur Render (ou Railway)
 
-Le projet utilise SQLite par défaut : sur un disque éphémère (plan gratuit sans volume), **les données sont effacées à chaque redéploiement**. Pour une démonstration de portfolio c'est suffisant ; pour une vraie persistance, utilise un volume (`DATABASE_URL=sqlite:////data/app.db` avec le `Dockerfile` fourni, qui déclare déjà `VOLUME /data`) ou bascule sur PostgreSQL (`New → PostgreSQL` sur Render, puis `DATABASE_URL=postgresql+psycopg://...`, et ajoute `psycopg[binary]` à `requirements.txt`).
+Le projet utilise SQLite par défaut : sur un disque éphémère (plan gratuit sans volume), **les données sont effacées à chaque redéploiement**. Pour une vraie persistance, utilisez un volume (`DATABASE_URL=sqlite:////data/app.db` avec le `Dockerfile` fourni, qui déclare déjà `VOLUME /data`) ou basculez sur PostgreSQL (`New → PostgreSQL` sur Render, puis `DATABASE_URL=postgresql+psycopg://...`, et ajoutez `psycopg[binary]` à `requirements.txt`).
 
 1. Sur render.com : **New → Web Service**, connecte ce dépôt GitHub (runtime Docker, le `Dockerfile` est détecté automatiquement).
 2. Variables d'environnement : `SECRET_KEY` (longue valeur aléatoire), `DATABASE_URL` si tu utilises PostgreSQL, `ALLOWED_ORIGINS` (URL de ton site si tu branches un frontend).
