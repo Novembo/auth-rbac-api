@@ -5,22 +5,30 @@ accepte donc "editor" et "admin", pas "user".
 """
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
 from app import models
 from app.database import get_db
 from app.security import decode_access_token
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+bearer_scheme = HTTPBearer(auto_error=False)
 
 ROLE_LEVEL = {"user": 0, "editor": 1, "admin": 2}
 
 
 def get_current_user(
-    token: str = Depends(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
     db: Session = Depends(get_db),
 ) -> models.User:
+    if credentials is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    token = credentials.credentials
+
     credentials_error = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Identifiants invalides ou expirés",
