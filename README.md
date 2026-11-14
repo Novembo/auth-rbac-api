@@ -1,5 +1,7 @@
 # Auth RBAC API
 
+[![CI](https://github.com/Novembo/auth-rbac-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Novembo/auth-rbac-api/actions/workflows/ci.yml)
+
 API FastAPI d'authentification JWT et de permissions par rôle (RBAC) — inscription, connexion, et endpoints protégés selon trois rôles : `user`, `editor`, `admin`.
 
 **Stack :** FastAPI · SQLAlchemy (SQLite par défaut, PostgreSQL en production) · JWT (`python-jose`) · bcrypt (`passlib`) · pytest · Docker · GitHub Actions
@@ -87,7 +89,7 @@ docker run -p 8000:8000 -v auth-data:/data -e SECRET_KEY=... auth-rbac-api
 
 ### CI
 
-`.github/workflows/ci.yml` installe les dépendances et lance `pytest` à chaque push et pull request.
+Le workflow `.github/workflows/ci.yml` installe les dépendances et lance `pytest` sur chaque push et pull request. Le service Render est décrit par `render.yaml`; Render génère la clé de signature et demande `ALLOWED_ORIGINS` lors de la création du service.
 
 ## Choix volontairement simples
 
