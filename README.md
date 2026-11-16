@@ -2,9 +2,32 @@
 
 [![CI](https://github.com/Novembo/auth-rbac-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Novembo/auth-rbac-api/actions/workflows/ci.yml)
 
-API FastAPI d'authentification JWT et de permissions par rôle (RBAC) — inscription, connexion, et endpoints protégés selon trois rôles : `user`, `editor`, `admin`.
+API FastAPI conçue pour démontrer une architecture d’authentification et d’autorisation sérieuse : inscription, connexion, JWT, validation des rôles, et protection des ressources selon un modèle RBAC clair (`user`, `editor`, `admin`).
+
+Cette application vise à montrer que je sais concevoir un backend Python avec :
+- sécurité applicative pertinente,
+- séparation des responsabilités,
+- validation des entrées,
+- permissions serveur-side,
+- tests de régression et documentation exploitable.
 
 **Stack :** FastAPI · SQLAlchemy (SQLite par défaut, PostgreSQL en production) · JWT (`python-jose`) · bcrypt (`passlib`) · pytest · Docker · GitHub Actions
+
+## Pourquoi ce projet est crédible
+
+- le rôle est vérifié à chaque requête,
+- l’accès aux ressources est limité côté serveur,
+- les permissions ne dépendent pas d'un simple cookie ou d'un frontend,
+- l’API a des tests qui couvrent les scénarios dangereux (rétrogradation, auto-promotion, accès interdit),
+- l’API est prête à être exploitable comme base d’un service authentifié de production.
+
+## Méthodologie de travail
+
+1. Définir les règles métier et les permissions.
+2. Séparer l’authentification, l’autorisation et les ressources.
+3. Valider les données dès l’entrée et sécuriser les endpoints critiques.
+4. Tester les cas d’accès refusé et les comportements de sécurité.
+5. Documenter les flux utiles pour le déploiement et la maintenance.
 
 ## Démo en ligne
 
