@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Novembo/auth-rbac-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Novembo/auth-rbac-api/actions/workflows/ci.yml)
 
-API FastAPI conçue pour démontrer une architecture d’authentification et d’autorisation sérieuse : inscription, connexion, JWT, validation des rôles, et protection des ressources selon un modèle RBAC clair (`user`, `editor`, `admin`).
+API FastAPI de démonstration qui couvre l’inscription, la connexion JWT et l’autorisation des ressources selon trois rôles (`user`, `editor`, `admin`).
 
 Cette application vise à montrer que je sais concevoir un backend Python avec :
 - sécurité applicative pertinente,
@@ -11,7 +11,7 @@ Cette application vise à montrer que je sais concevoir un backend Python avec :
 - permissions serveur-side,
 - tests de régression et documentation exploitable.
 
-**Stack :** FastAPI · SQLAlchemy (SQLite par défaut, PostgreSQL en production) · JWT (`python-jose`) · bcrypt (`passlib`) · pytest · Docker · GitHub Actions
+**Stack :** FastAPI · SQLAlchemy (SQLite par défaut, PostgreSQL configurable) · JWT (`python-jose`) · bcrypt (`passlib`) · pytest · Docker · GitHub Actions
 
 ## Pourquoi ce projet est crédible
 
@@ -19,7 +19,7 @@ Cette application vise à montrer que je sais concevoir un backend Python avec :
 - l’accès aux ressources est limité côté serveur,
 - les permissions ne dépendent pas d'un simple cookie ou d'un frontend,
 - l’API a des tests qui couvrent les scénarios dangereux (rétrogradation, auto-promotion, accès interdit),
-- l’API est prête à être exploitable comme base d’un service authentifié de production.
+- l’API illustre des contrôles côté serveur; une revue de sécurité et des adaptations restent nécessaires avant tout usage métier réel.
 
 ## Méthodologie de travail
 
@@ -31,8 +31,11 @@ Cette application vise à montrer que je sais concevoir un backend Python avec :
 
 ## Démo en ligne
 
-- API & Docs interactive : `https://auth-rbac-api-hvlo.onrender.com/docs`
-- Health check : `GET /health`
+- **Statut :** démo publique déployée sur Render; le service gratuit peut se mettre en veille.
+- [Documentation interactive](https://auth-rbac-api-hvlo.onrender.com/docs)
+- [Health check](https://auth-rbac-api-hvlo.onrender.com/health)
+
+La démo utilise SQLite par défaut. Sur un hébergement à système de fichiers éphémère, les données peuvent être perdues lors d’un redéploiement; n’y stockez pas de données réelles.
 
 ## Règles de permissions
 
@@ -81,6 +84,8 @@ uvicorn app.main:app --reload
 
 Ouvre http://127.0.0.1:8000/docs pour tester l'API directement dans le navigateur (bouton "Authorize" avec le jeton obtenu via `/auth/login`).
 
+Sous Windows PowerShell, crée et active l’environnement avec `py -m venv .venv` puis `.\.venv\Scripts\Activate.ps1`. Après activation, installe les dépendances comme ci-dessus et copie `.env.example` vers `.env` avec `Copy-Item .env.example .env`.
+
 ## Tests
 
 ```bash
@@ -97,7 +102,7 @@ Importe `postman/collection.json` dans Postman. La requête "Login" enregistre a
 
 ### Backend sur Render (ou Railway)
 
-Le projet utilise SQLite par défaut : sur un disque éphémère (plan gratuit sans volume), **les données sont effacées à chaque redéploiement**. Pour une vraie persistance, utilisez un volume (`DATABASE_URL=sqlite:////data/app.db` avec le `Dockerfile` fourni, qui déclare déjà `VOLUME /data`) ou basculez sur PostgreSQL (`New → PostgreSQL` sur Render, puis `DATABASE_URL=postgresql+psycopg://...`, et ajoutez `psycopg[binary]` à `requirements.txt`).
+Le projet utilise SQLite par défaut : sur un disque éphémère (plan gratuit sans volume), **les données peuvent être perdues lors d’un redéploiement**. Pour un déploiement durable, configurez un stockage persistant ou PostgreSQL, puis vérifiez les sauvegardes et la configuration avant d’y placer des données réelles.
 
 1. Sur render.com : **New → Web Service**, connecte ce dépôt GitHub (runtime Docker, le `Dockerfile` est détecté automatiquement).
 2. Variables d'environnement : `SECRET_KEY` (longue valeur aléatoire), `DATABASE_URL` si tu utilises PostgreSQL, `ALLOWED_ORIGINS` (URL de ton site si tu branches un frontend).
